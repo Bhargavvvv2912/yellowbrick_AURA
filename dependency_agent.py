@@ -31,7 +31,7 @@ AGENT_CONFIG = {
     "PRIMARY_REQUIREMENTS_FILE": "primary_requirements.txt",
     "VALIDATION_CONFIG": {
         "type": "script",
-        "smoke_test_script": "validation_transformer.py",
+        "smoke_test_script": "validation_yellowbrick.py",
         "project_dir": "." 
     },
     "MAX_RUN_PASSES": 3,

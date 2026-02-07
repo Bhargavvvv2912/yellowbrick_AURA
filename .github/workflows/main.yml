@@ -24,7 +24,7 @@ jobs:
           ./baseline_env/bin/pip install --upgrade pip
           ./baseline_env/bin/pip install -r requirements.txt
           ./baseline_env/bin/pip install -e .
-          ./baseline_env/bin/python validation_yellow.py
+          ./baseline_env/bin/python validation_yellowbrick.py
 
       - name: 💥 2. Run Pip Upgrade
         continue-on-error: true
@@ -33,7 +33,7 @@ jobs:
           ./upgrade_env/bin/pip install --upgrade pip
           ./upgrade_env/bin/pip install -r primary_requirements.txt
           ./upgrade_env/bin/pip install -e .
-          ./upgrade_env/bin/python validation_yellow.py
+          ./upgrade_env/bin/python validation_yellowbrick.py
 
       - name: 🤖 3. Run AURA Agent
         run: |
