@@ -1,0 +1,572 @@
+
+::group::Analyzing Codebase for Update Risk
+Usage scores calculated.
+::endgroup::
+INFO: Found pinned requirements. Running initial health check and regenerating lockfile...
+
+::group::Initial Baseline Health Check
+--> Bootstrap Step 1: Installing dependencies from 'requirements.txt'...
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/initial_check_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/requirements.txt' in CWD: '.'
+
+--> Bootstrap Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/initial_check_venv/bin/python /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/validation_yellowbrick.py' in CWD: '.'
+Smoke test PASSED.
+::endgroup::
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/initial_check_venv/bin/python -m pip freeze' in CWD: '.'
+Initial baseline is valid and stable. Overwriting requirements file with clean, frozen state.
+::endgroup::
+INFO: Dependency graph metrics not found. Entanglement scores will be 0.
+
+::group::UPDATE PASS 1/3
+
+Prioritized Update Plan for this Pass (Highest Risk First):
+Rank  | Package                        | % of Total Risk    | Change
+----- | ------------------------------ | ------------------ | --------------------
+1     | numpy                          | 32.26             % | 1.24.3 -> 2.4.2
+2     | scipy                          | 16.13             % | 1.10.1 -> 1.17.0
+3     | matplotlib                     | 16.13             % | 3.7.1 -> 3.10.8
+4     | cycler                         | 16.13             % | 0.11.0 -> 0.12.1
+5     | scikit-learn                   | 16.13             % | 1.2.2 -> 1.8.0
+6     | contourpy                      | 3.23              % | 1.3.2 -> 1.3.3
+
+--------------------------------------------------------------------------------
+PULSE: [PASS 1 | ATTEMPT 1/6] Processing 'numpy'
+PULSE: Changed packages this pass so far: set()
+--------------------------------------------------------------------------------
+
+--> Toplevel Attempt: Trying direct update to numpy==2.4.2
+
+::group::Probe: Install & Validate for numpy==2.4.2
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+::endgroup::
+
+--> Toplevel Result: Direct update FAILED. Reason: 'Dependency installation failed: The dependency conflict is caused by incompatible requirements between the specified package versions: `contourpy==1.3.2`, `scikit-learn==1.2.2`, `scipy==1.10.1`, `matplotlib==3.7.1`, and `numpy==2.4.2`.'
+    Suspected Blockers (Regex): ['scipy', 'matplotlib', 'contourpy', 'scikit-learn', 'numpy']
+--> Action: Entering Level 1 Healing with 'Filter-Then-Scan' strategy.
+
+::group::Healing 'numpy': Filter-Then-Scan Strategy
+
+--- Phase 1: Filtering for compatible versions ---
+  -> Checking compatibility of numpy==2.4.2...
+     -- Incompatible. Diagnosis: The dependency conflict arises because contourpy==1.3.2, matplotlib==3.7.1, numpy==2.4.2, scikit-learn==1.2.2, and scipy==1.10.1 have conflicting dependencies when installed together.
+  -> Checking compatibility of numpy==2.4.1...
+     -- Incompatible. Diagnosis: The dependency conflict arises because the specified versions of contourpy==1.3.2, matplotlib==3.7.1, numpy==2.4.1, scikit-learn==1.2.2, and scipy==1.10.1 have conflicting internal dependencies, making them incompatible for installation together.
+  -> Checking compatibility of numpy==2.4.0...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.4.0`, `scikit-learn==1.2.2`, and `scipy==1.10.1` have conflicting dependencies and cannot be installed together.
+  -> Checking compatibility of numpy==2.3.5...
+     -- Incompatible. Diagnosis: The dependency conflict is caused by incompatible requirements among the specified versions of contourpy==1.3.2, matplotlib==3.7.1, numpy==2.3.5, scikit-learn==1.2.2, and scipy==1.10.1 when installed together.
+  -> Checking compatibility of numpy==2.3.4...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.3.4`, `scikit-learn==1.2.2`, and `scipy==1.10.1` have conflicting dependencies, preventing their simultaneous installation.
+  -> Checking compatibility of numpy==2.3.3...
+     -- Incompatible. Diagnosis: The dependency conflict arises because `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.3.3`, `scikit-learn==1.2.2`, and `scipy==1.10.1` have incompatible sub-dependencies that cannot all be satisfied simultaneously.
+  -> Checking compatibility of numpy==2.3.2...
+     -- Incompatible. Diagnosis: The dependency conflict arises because contourpy==1.3.2, matplotlib==3.7.1, numpy==2.3.2, scikit-learn==1.2.2, and scipy==1.10.1 have incompatible requirements when installed together.
+  -> Checking compatibility of numpy==2.3.1...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.3.1`, `scikit-learn==1.2.2`, and `scipy==1.10.1` have conflicting dependencies preventing their simultaneous installation.
+  -> Checking compatibility of numpy==2.3.0...
+     -- Incompatible. Diagnosis: The dependency conflict arises because contourpy==1.3.2, matplotlib==3.7.1, numpy==2.3.0, scikit-learn==1.2.2, and scipy==1.10.1 have conflicting dependencies among themselves.
+  -> Checking compatibility of numpy==2.2.6...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.2.6`, `scikit-learn==1.2.2`, and `scipy==1.10.1` have conflicting dependencies that prevent them from being installed together.
+  -> Checking compatibility of numpy==2.2.5...
+     -- Incompatible. Diagnosis: The dependency conflict arises because the specified versions of contourpy==1.3.2, matplotlib==3.7.1, numpy==2.2.5, scikit-learn==1.2.2, and scipy==1.10.1 have conflicting dependencies.
+  -> Checking compatibility of numpy==2.2.4...
+     -- Incompatible. Diagnosis: The dependency conflict arises because contourpy==1.3.2, matplotlib==3.7.1, numpy==2.2.4, scikit-learn==1.2.2, and scipy==1.10.1 have incompatible dependencies with each other.
+  -> Checking compatibility of numpy==2.2.3...
+     -- Incompatible. Diagnosis: The dependency conflict arises because contourpy==1.3.2, matplotlib==3.7.1, numpy==2.2.3, scikit-learn==1.2.2, and scipy==1.10.1 have incompatible dependency requirements with one another.
+  -> Checking compatibility of numpy==2.2.2...
+     -- Incompatible. Diagnosis: The dependency conflict is caused by incompatible requirements among the specified package versions `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.2.2`, `scikit-learn==1.2.2`, and `scipy==1.10.1`.
+  -> Checking compatibility of numpy==2.2.1...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that contourpy==1.3.2, matplotlib==3.7.1, numpy==2.2.1, scikit-learn==1.2.2, and scipy==1.10.1 have conflicting dependencies with each other, making their simultaneous installation impossible.
+  -> Checking compatibility of numpy==2.2.0...
+     -- Incompatible. Diagnosis: The dependency conflict is caused by the specified versions of `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.2.0`, `scikit-learn==1.2.2`, and `scipy==1.10.1` having mutually incompatible underlying requirements.
+  -> Checking compatibility of numpy==2.1.3...
+     -- Incompatible. Diagnosis: The dependency conflict arises because `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.1.3`, `scikit-learn==1.2.2`, and `scipy==1.10.1` have conflicting requirements that prevent them from being installed simultaneously.
+  -> Checking compatibility of numpy==2.1.2...
+     -- Incompatible. Diagnosis: The dependency conflict arises because `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.1.2`, `scikit-learn==1.2.2`, and `scipy==1.10.1` have incompatible dependencies with each other, preventing their simultaneous installation.
+  -> Checking compatibility of numpy==2.1.1...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.1.1`, `scikit-learn==1.2.2`, and `scipy==1.10.1` have conflicting dependencies and cannot be installed together.
+  -> Checking compatibility of numpy==2.1.0...
+     -- Incompatible. Diagnosis: The dependency conflict is caused by incompatible requirements among the specified package versions: contourpy==1.3.2, matplotlib==3.7.1, numpy==2.1.0, scikit-learn==1.2.2, and scipy==1.10.1.
+  -> Checking compatibility of numpy==2.0.2...
+     -- Incompatible. Diagnosis: The dependency conflict is caused by `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.0.2`, `scikit-learn==1.2.2`, and `scipy==1.10.1` having mutually incompatible underlying dependencies.
+  -> Checking compatibility of numpy==2.0.1...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that the requested versions of contourpy==1.3.2, matplotlib==3.7.1, numpy==2.0.1, scikit-learn==1.2.2, and scipy==1.10.1 have incompatible dependencies among themselves.
+  -> Checking compatibility of numpy==2.0.0...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.0.0`, `scikit-learn==1.2.2`, and `scipy==1.10.1` have conflicting dependencies among themselves.
+  -> Checking compatibility of numpy==1.26.4...
+     -- Compatible.
+  -> Checking compatibility of numpy==1.26.3...
+     -- Compatible.
+  -> Checking compatibility of numpy==1.26.2...
+     -- Compatible.
+  -> Checking compatibility of numpy==1.26.1...
+     -- Compatible.
+  -> Checking compatibility of numpy==1.26.0...
+     -- Compatible.
+  -> Checking compatibility of numpy==1.25.2...
+     -- Compatible.
+  -> Checking compatibility of numpy==1.25.1...
+     -- Compatible.
+  -> Checking compatibility of numpy==1.25.0...
+     -- Compatible.
+  -> Checking compatibility of numpy==1.24.4...
+     -- Compatible.
+
+--- Phase 2: Validating compatible versions (newest first) ---
+Found 9 compatible versions to test: ['1.26.4', '1.26.3', '1.26.2', '1.26.1', '1.26.0', '1.25.2', '1.25.1', '1.25.0', '1.24.4']
+
+::group::Probe: Install & Validate for numpy==1.26.4
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/validation_yellowbrick.py' in CWD: '.'
+Smoke test PASSED.
+::endgroup::
+--> SUCCESS: Probe passed.
+::endgroup::
+
+SUCCESS: Found latest working version: numpy==1.26.4
+::endgroup::
+--> Healing Result: Level 1 Succeeded. Found new working version: 1.26.4
+  -> SUCCESS. Locking in numpy==1.26.4
+
+--------------------------------------------------------------------------------
+PULSE: [PASS 1 | ATTEMPT 2/6] Processing 'scipy'
+PULSE: Changed packages this pass so far: {'numpy'}
+--------------------------------------------------------------------------------
+
+--> Toplevel Attempt: Trying direct update to scipy==1.17.0
+
+::group::Probe: Install & Validate for scipy==1.17.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/validation_yellowbrick.py' in CWD: '.'
+Smoke test PASSED.
+::endgroup::
+--> SUCCESS: Probe passed.
+::endgroup::
+--> Toplevel Result: Direct update SUCCEEDED.
+  -> SUCCESS. Locking in scipy==1.17.0
+
+--------------------------------------------------------------------------------
+PULSE: [PASS 1 | ATTEMPT 3/6] Processing 'matplotlib'
+PULSE: Changed packages this pass so far: {'scipy', 'numpy'}
+--------------------------------------------------------------------------------
+
+--> Toplevel Attempt: Trying direct update to matplotlib==3.10.8
+
+::group::Probe: Install & Validate for matplotlib==3.10.8
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/validation_yellowbrick.py' in CWD: '.'
+Smoke test PASSED.
+::endgroup::
+--> SUCCESS: Probe passed.
+::endgroup::
+--> Toplevel Result: Direct update SUCCEEDED.
+  -> SUCCESS. Locking in matplotlib==3.10.8
+
+--------------------------------------------------------------------------------
+PULSE: [PASS 1 | ATTEMPT 4/6] Processing 'cycler'
+PULSE: Changed packages this pass so far: {'scipy', 'numpy', 'matplotlib'}
+--------------------------------------------------------------------------------
+
+--> Toplevel Attempt: Trying direct update to cycler==0.12.1
+
+::group::Probe: Install & Validate for cycler==0.12.1
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/validation_yellowbrick.py' in CWD: '.'
+Smoke test PASSED.
+::endgroup::
+--> SUCCESS: Probe passed.
+::endgroup::
+--> Toplevel Result: Direct update SUCCEEDED.
+  -> SUCCESS. Locking in cycler==0.12.1
+
+--------------------------------------------------------------------------------
+PULSE: [PASS 1 | ATTEMPT 5/6] Processing 'scikit-learn'
+PULSE: Changed packages this pass so far: {'scipy', 'numpy', 'matplotlib', 'cycler'}
+--------------------------------------------------------------------------------
+
+--> Toplevel Attempt: Trying direct update to scikit-learn==1.8.0
+
+::group::Probe: Install & Validate for scikit-learn==1.8.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/validation_yellowbrick.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+FAILED: This estimator is not a classifier; try a regression or clustering score visualizer instead!
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+--> Toplevel Result: Direct update FAILED. Reason: 'Validation script failed'
+    Suspected Blockers (Regex): []
+--> Action: Entering Level 1 Healing with 'Filter-Then-Scan' strategy.
+
+::group::Healing 'scikit-learn': Filter-Then-Scan Strategy
+
+--- Phase 1: Filtering for compatible versions ---
+  -> Checking compatibility of scikit-learn==1.8.0...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.7.2...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.7.1...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.7.0...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.6.1...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.6.0...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.5.2...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.5.1...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.5.0...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.4.2...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.4.1.post1...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.4.0...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.3.2...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.3.1...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.3.0...
+     -- Compatible.
+
+--- Phase 2: Validating compatible versions (newest first) ---
+Found 15 compatible versions to test: ['1.8.0', '1.7.2', '1.7.1', '1.7.0', '1.6.1', '1.6.0', '1.5.2', '1.5.1', '1.5.0', '1.4.2', '1.4.1.post1', '1.4.0', '1.3.2', '1.3.1', '1.3.0']
+
+::group::Probe: Install & Validate for scikit-learn==1.8.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/validation_yellowbrick.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+FAILED: This estimator is not a classifier; try a regression or clustering score visualizer instead!
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scikit-learn==1.7.2
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/validation_yellowbrick.py' in CWD: '.'
+Smoke test PASSED.
+::endgroup::
+--> SUCCESS: Probe passed.
+::endgroup::
+
+SUCCESS: Found latest working version: scikit-learn==1.7.2
+::endgroup::
+--> Healing Result: Level 1 Succeeded. Found new working version: 1.7.2
+  -> SUCCESS. Locking in scikit-learn==1.7.2
+
+--------------------------------------------------------------------------------
+PULSE: [PASS 1 | ATTEMPT 6/6] Processing 'contourpy'
+PULSE: Changed packages this pass so far: {'scipy', 'matplotlib', 'scikit-learn', 'numpy', 'cycler'}
+--------------------------------------------------------------------------------
+
+--> Toplevel Attempt: Trying direct update to contourpy==1.3.3
+
+::group::Probe: Install & Validate for contourpy==1.3.3
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/validation_yellowbrick.py' in CWD: '.'
+Smoke test PASSED.
+::endgroup::
+--> SUCCESS: Probe passed.
+::endgroup::
+--> Toplevel Result: Direct update SUCCEEDED.
+  -> SUCCESS. Locking in contourpy==1.3.3
+::endgroup::
+
+Pass complete with changes.
+
+::group::UPDATE PASS 2/3
+
+Prioritized Update Plan for this Pass (Highest Risk First):
+Rank  | Package                        | % of Total Risk    | Change
+----- | ------------------------------ | ------------------ | --------------------
+1     | numpy                          | 66.67             % | 1.26.4 -> 2.4.2
+2     | scikit-learn                   | 33.33             % | 1.7.2 -> 1.8.0
+
+--------------------------------------------------------------------------------
+PULSE: [PASS 2 | ATTEMPT 1/2] Processing 'numpy'
+PULSE: Changed packages this pass so far: set()
+--------------------------------------------------------------------------------
+
+--> Toplevel Attempt: Trying direct update to numpy==2.4.2
+
+::group::Probe: Install & Validate for numpy==2.4.2
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/validation_yellowbrick.py' in CWD: '.'
+Smoke test PASSED.
+::endgroup::
+--> SUCCESS: Probe passed.
+::endgroup::
+--> Toplevel Result: Direct update SUCCEEDED.
+  -> SUCCESS. Locking in numpy==2.4.2
+
+--------------------------------------------------------------------------------
+PULSE: [PASS 2 | ATTEMPT 2/2] Processing 'scikit-learn'
+PULSE: Changed packages this pass so far: {'numpy'}
+--------------------------------------------------------------------------------
+
+--> Toplevel Attempt: Trying direct update to scikit-learn==1.8.0
+
+::group::Probe: Install & Validate for scikit-learn==1.8.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/validation_yellowbrick.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+FAILED: This estimator is not a classifier; try a regression or clustering score visualizer instead!
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+--> Toplevel Result: Direct update FAILED. Reason: 'Validation script failed'
+    Suspected Blockers (Regex): []
+--> Action: Entering Level 1 Healing with 'Filter-Then-Scan' strategy.
+
+::group::Healing 'scikit-learn': Filter-Then-Scan Strategy
+
+--- Phase 1: Filtering for compatible versions ---
+  -> Checking compatibility of scikit-learn==1.8.0...
+     -- Compatible.
+
+--- Phase 2: Validating compatible versions (newest first) ---
+Found 1 compatible versions to test: ['1.8.0']
+
+::group::Probe: Install & Validate for scikit-learn==1.8.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/validation_yellowbrick.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+FAILED: This estimator is not a classifier; try a regression or clustering score visualizer instead!
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+Result: No compatible version passed validation. Reverting to last known good version.
+::endgroup::
+
+--> Action: Level 1 Healing failed for 'scikit-learn'. Escalating to Level 2 'Iterative Greedy Expansion'.
+
+    -> [Greedy Expansion Iteration 1/5]
+       Current Conflict Cluster: set()
+       Updatable Candidates: []
+       No updatable blockers found in initial set. Skipping Greedy.
+
+       Greedy Heuristic exhausted.
+
+    -> [LLM Refinement Attempt 1/3] Requesting Expert Plan...
+  -> LLM_ERROR: Extra data: line 1 column 3 (char 2)
+    -> Expert sees no plausible solution.
+--> Healing Result: All attempts failed. Reverting.
+  -> Result for scikit-learn: Reverted/Kept at 1.7.2 (No Change).
+::endgroup::
+
+Pass complete with changes.
+
+::group::UPDATE PASS 3/3
+
+Prioritized Update Plan for this Pass (Highest Risk First):
+Rank  | Package                        | % of Total Risk    | Change
+----- | ------------------------------ | ------------------ | --------------------
+1     | scikit-learn                   | 100.00            % | 1.7.2 -> 1.8.0
+
+--------------------------------------------------------------------------------
+PULSE: [PASS 3 | ATTEMPT 1/1] Processing 'scikit-learn'
+PULSE: Changed packages this pass so far: set()
+--------------------------------------------------------------------------------
+
+--> Toplevel Attempt: Trying direct update to scikit-learn==1.8.0
+
+::group::Probe: Install & Validate for scikit-learn==1.8.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/validation_yellowbrick.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+FAILED: This estimator is not a classifier; try a regression or clustering score visualizer instead!
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+--> Toplevel Result: Direct update FAILED. Reason: 'Validation script failed'
+    Suspected Blockers (Regex): []
+--> Action: Entering Level 1 Healing with 'Filter-Then-Scan' strategy.
+
+::group::Healing 'scikit-learn': Filter-Then-Scan Strategy
+
+--- Phase 1: Filtering for compatible versions ---
+  -> Checking compatibility of scikit-learn==1.8.0...
+     -- Compatible.
+
+--- Phase 2: Validating compatible versions (newest first) ---
+Found 1 compatible versions to test: ['1.8.0']
+
+::group::Probe: Install & Validate for scikit-learn==1.8.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/yellowbrick_AURA/yellowbrick_AURA/temp_venv/bin/python /home/runner/work/yellowbrick_AURA/yellowbrick_AURA/validation_yellowbrick.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+FAILED: This estimator is not a classifier; try a regression or clustering score visualizer instead!
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+Result: No compatible version passed validation. Reverting to last known good version.
+::endgroup::
+
+--> Action: Level 1 Healing failed for 'scikit-learn'. Escalating to Level 2 'Iterative Greedy Expansion'.
+
+    -> [Greedy Expansion Iteration 1/5]
+       Current Conflict Cluster: set()
+       Updatable Candidates: []
+       No updatable blockers found in initial set. Skipping Greedy.
+
+       Greedy Heuristic exhausted.
+
+    -> [LLM Refinement Attempt 1/3] Requesting Expert Plan...
+  -> LLM_ERROR: Extra data: line 1 column 3 (char 2)
+    -> Expert sees no plausible solution.
+--> Healing Result: All attempts failed. Reverting.
+  -> Result for scikit-learn: Reverted/Kept at 1.7.2 (No Change).
+::endgroup::
+
+No effective version changes were possible in this pass. The system has converged.
+
+######################################################################
+### OVERALL UPDATE RUN SUMMARY ###
+
+[SUCCESS] The following packages were successfully updated:
+Package                        | Old Version          | New Version         
+------------------------------ | -------------------- | --------------------
+numpy                          | 1.26.4               | 2.4.2               
+scipy                          | 1.10.1               | 1.17.0              
+matplotlib                     | 3.7.1                | 3.10.8              
+cycler                         | 0.11.0               | 0.12.1              
+scikit-learn                   | 1.2.2                | 1.7.2               
+contourpy                      | 1.3.2                | 1.3.3               
+######################################################################
+
+
+Run complete. The final requirements.txt is the latest provably working version.
